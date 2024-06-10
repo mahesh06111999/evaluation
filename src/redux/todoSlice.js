@@ -1,77 +1,58 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  currState: "mainCard",
+  currState: 'mainCard',
   mainCard: [
     {
       id: 101,
-      groupName: "My Resources",
+      groupName: 'To-do',
       tasks: [
-        { id: 1, title: "Test-1", date: new Date().toLocaleString() },
-        { id: 2, title: "Test-2", date: new Date().toLocaleString() },
+        { id: 1, title: 'Assignment - 3' },
+        { id: 2, title: 'Assignment - 4' },
+        { id: 3, title: 'Assignment - 5' },
       ],
     },
     {
-      id: 102,
-      groupName: "Todo",
-      tasks: [],
-    },
-    {
       id: 103,
-      groupName: "Doing",
-      tasks: [],
+      groupName: 'Doing',
+      tasks: [{ id: 4, title: 'Assignment - 2' }],
     },
     {
       id: 104,
-      groupName: "Done",
-      tasks: [],
+      groupName: 'Done',
+      tasks: [{ id: 5, title: 'Assignment - 1' }],
     },
   ],
   newBoard: [
     {
       id: 543,
-      groupName: "New Board",
-      tasks: [
-        { id: 1, title: "new bord task", date: new Date().toLocaleString() },
-        { id: 2, title: "Test-2", date: new Date().toLocaleString() },
-      ],
+      groupName: 'Task List',
+      tasks: [],
     },
   ],
 };
 
 export const userSlice = createSlice({
-  name: "card",
+  name: 'card',
   initialState,
   reducers: {
     addTask: (state, action) => {
       const items = Array.from(
-        state.currState === "mainCard" ? state.mainCard : state.newBoard
+        state.currState === 'mainCard' ? state.mainCard : state.newBoard
       );
       const a = items.find((item) => item.id === action.payload.cardId);
       const aArray = a.tasks;
       aArray.push({
         id: Date.now(),
         title: action.payload.message,
-        date: new Date().toLocaleString(),
       });
 
       return state;
-      // state.newBoard = JSON.parse(JSON.stringify(items));
     },
 
     addCard: (state, action) => {
-      // const items = Array.from(
-      //   state.currState === "mainCard" ? state.mainCard : state.newBoard
-      // );
-      // console.log(items);
-      // items.push({
-      //   id: Date.now(),
-      //   groupName: action.payload.title,
-      //   tasks: [],
-      // });
-
       const card =
-        state.currState === "mainCard" ? state.mainCard : state.newBoard;
+        state.currState === 'mainCard' ? state.mainCard : state.newBoard;
       card.push({
         id: Date.now(),
         groupName: action.payload.title,
@@ -83,7 +64,7 @@ export const userSlice = createSlice({
 
     deleteTask: (state, action) => {
       const items = Array.from(
-        state.currState === "mainCard" ? state.mainCard : state.newBoard
+        state.currState === 'mainCard' ? state.mainCard : state.newBoard
       );
       const a = items.find((item) => item.id === action.payload.cardId);
       const aArray = a.tasks;
@@ -92,13 +73,11 @@ export const userSlice = createSlice({
         aArray.findIndex((item) => item.id === action.payload.id),
         1
       );
-
-      // state.mainCard = JSON.parse(JSON.stringify(items));
     },
 
     deleteCard: (state, action) => {
       const items =
-        state?.currState === "mainCard" ? state.mainCard : state.newBoard;
+        state?.currState === 'mainCard' ? state.mainCard : state.newBoard;
       console.log(items);
 
       items.splice(
@@ -107,32 +86,9 @@ export const userSlice = createSlice({
       );
     },
 
-    editTask: (state, action) => {
-      const items = Array.from(
-        state?.currState === "mainCard" ? state.mainCard : state.newBoard
-      );
-      const a = items.find((item) => item.id === action.payload.cardId);
-      const aArray = a.tasks;
-
-      const b = aArray.find((item) => item.id === action.payload.id);
-      b.title = action.payload.newMessage;
-      b.date = new Date().toLocaleString();
-
-      // state.mainCard = JSON.parse(JSON.stringify(items));
-    },
-
-    editCardName: (state, action) => {
-      const card = Array.from(
-        state?.currState === "mainCard" ? state.mainCard : state.newBoard
-      );
-      const a = card.find((item) => item.id === action.payload.cardId);
-
-      a.groupName = action.payload.title;
-    },
-
     shiftTask: (state, action) => {
       const items = Array.from(
-        state?.currState === "mainCard" ? state.mainCard : state.newBoard
+        state?.currState === 'mainCard' ? state.mainCard : state.newBoard
       );
 
       const a = items.find(
@@ -151,10 +107,10 @@ export const userSlice = createSlice({
     },
 
     newBoardDispatch: (state, action) => {
-      if (state.currState === "mainCard") {
-        state.currState = "newBoard";
+      if (state.currState === 'mainCard') {
+        state.currState = 'newBoard';
       } else {
-        state.currState = "mainCard";
+        state.currState = 'mainCard';
       }
     },
   },

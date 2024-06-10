@@ -1,25 +1,24 @@
-import React, { useState } from "react";
-import Task from "./Task";
-import { Draggable, Droppable } from "react-beautiful-dnd";
-import { useDispatch } from "react-redux";
-import { addTask, deleteTask, editTask } from "../redux/todoSlice";
-import toast, { Toaster } from "react-hot-toast";
+import React, { useState } from 'react';
+import Task from './Task';
+import { Draggable, Droppable } from 'react-beautiful-dnd';
+import { useDispatch } from 'react-redux';
+import { addTask, deleteTask } from '../redux/todoSlice';
+import toast, { Toaster } from 'react-hot-toast';
 
 const Tasks = ({ todoList }) => {
   const dispatch = useDispatch();
 
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
 
   const handleAddTask = async (e) => {
     e.preventDefault();
 
-    if (message.length === 0) return toast.error("Message cannot be empty");
+    if (message.length === 0) return toast.error('Message cannot be empty');
 
     try {
       const data = { cardId: todoList.id, message: message };
       dispatch(addTask(data));
-
-      setMessage("");
+      setMessage('');
     } catch (error) {
       console.log(error);
     }
@@ -31,18 +30,12 @@ const Tasks = ({ todoList }) => {
 
   const [openModel, setOpenModel] = useState(false);
 
-  const handleEditTask = async (taskId, newMessage) => {
-    dispatch(editTask({ cardId: todoList?.id, id: taskId, newMessage }));
-
-    setOpenModel(false);
-  };
-
   return (
     <div>
       <Droppable droppableId={todoList?.id?.toString()}>
         {(provided) => (
           <div {...provided.droppableProps} ref={provided.innerRef}>
-            {todoList?.tasks?.map(({ id, title, date }, index) => {
+            {todoList?.tasks?.map(({ id, title }, index) => {
               return (
                 <Draggable
                   key={id}
@@ -58,10 +51,8 @@ const Tasks = ({ todoList }) => {
                     >
                       <Task
                         handleDeleteTask={handleDeleteTask}
-                        handleEditTask={handleEditTask}
                         taskId={id}
                         taskTitle={title}
-                        taskDate={date}
                         openModel={openModel}
                         setOpenModel={setOpenModel}
                       />
@@ -84,7 +75,7 @@ const Tasks = ({ todoList }) => {
           placeholder="Add a Task"
           className="w-full p-2 mt-4 rounded-md"
         />
-        <button className="border-2 border-black rounded-md px-2 py-1 font-semibold bg-slate-400">
+        <button className="border-2 border-green-700 bg-green-700 rounded-md px-4 py-1 ml-[73%] mt-2 text-white">
           Submit
         </button>
       </form>

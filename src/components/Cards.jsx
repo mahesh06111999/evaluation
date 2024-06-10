@@ -1,14 +1,10 @@
-import React from "react";
-import Card from "./Card";
-import { DragDropContext } from "react-beautiful-dnd";
-import { useDispatch } from "react-redux";
-import { shiftTask } from "../redux/todoSlice";
-import { useSelector } from "react-redux";
+import React from 'react';
+import Card from './Card';
+import { DragDropContext } from 'react-beautiful-dnd';
+import { useDispatch } from 'react-redux';
+import { shiftTask } from '../redux/todoSlice';
 
 const Cards = ({ stateToMap }) => {
-  // const { currState } = useSelector((card) => card.todo);
-  // console.log(currState);
-
   const dispatch = useDispatch();
 
   const shiftingTasks = async (res) => {
